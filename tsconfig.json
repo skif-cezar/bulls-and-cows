@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*"]
 }
