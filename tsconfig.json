@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
 
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "vite/client"]
   },
   "include": ["src/**/*"]
 }
