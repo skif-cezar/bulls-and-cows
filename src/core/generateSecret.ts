@@ -23,7 +23,7 @@ export const generateSecret = (length: SecretLength, base: Base, random: () => n
     );
   }
 
-  const digits = alphabet.split('');
+  const digits = alphabet.toLowerCase().split('');
 
   for (let i = 0; i < length; i++) {
     const j = i + Math.floor(random() * (digits.length - i));
