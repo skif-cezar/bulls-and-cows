@@ -1,4 +1,5 @@
-import { SecretLength, Base, BASE_ALPHABETS } from '../types/game.types';
+import { SecretLength, Base } from '../types/game.types';
+import { createDigitValidator } from './createDigitValidator';
 
 /**
  * Checks whether the length of the attempt matches the length of the secret number.
@@ -8,25 +9,21 @@ import { SecretLength, Base, BASE_ALPHABETS } from '../types/game.types';
  * @param base Numeral system ('bin' | 'oct' | 'dec' | 'hex')
  */
 export const isValidGuess = (guess: string, length: SecretLength, base: Base): boolean => {
-  const alphabet = BASE_ALPHABETS[base];
-
-  if (!alphabet) {
-    return false;
-  }
-
   if (guess.length !== length) {
     return false;
   }
 
+  const isValidChar = createDigitValidator(base);
   const chars = guess.split('');
 
-  const isEveryCharValid = chars.every((char) => alphabet.includes(char));
+  const isEveryCharValid = chars.every((char) => isValidChar(char));
 
   if (!isEveryCharValid) {
     return false;
   }
 
-  const isUnique = new Set(chars).size === chars.length;
+  const normalizedChars = chars.map((char) => char.toLowerCase());
+  const isUnique = new Set(normalizedChars).size === normalizedChars.length;
 
   if (!isUnique) {
     return false;
