@@ -1,7 +1,24 @@
-import { Base } from '../types/game.types';
+import { Base, BASE_ALPHABETS } from '../types/game.types';
 
-export const createDigitValidator = (_base: Base) => {
-  return (_char: string): boolean => {
-    throw new Error('Not implemented');
+/**
+ * Given a numeral system, it returns a predicate function: "this character is a valid digit
+ * in this system"
+ * @param base Numeral system ('bin' | 'oct' | 'dec' | 'hex')
+ */
+export const createDigitValidator = (base: Base): ((char: string) => boolean) => {
+  const alphabet = BASE_ALPHABETS[base];
+
+  if (!alphabet) {
+    return () => false;
+  }
+
+  return (char: string): boolean => {
+    if (typeof char !== 'string' || char.length !== 1) {
+      return false;
+    }
+
+    const normalizedChar = char.toLowerCase();
+
+    return alphabet.includes(normalizedChar);
   };
 };
