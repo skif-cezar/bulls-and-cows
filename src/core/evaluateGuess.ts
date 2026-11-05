@@ -6,8 +6,8 @@ import { EvaluationResult } from '../types/game.types';
  * @param guess User attempt string
  */
 export const evaluateGuess = (secret: string, guess: string): EvaluationResult => {
-  const secretChars = secret.split('');
-  const guessChars = guess.split('');
+  const secretChars = secret.toLowerCase().split('');
+  const guessChars = guess.toLowerCase().split('');
 
   if (guessChars.length !== secretChars.length) {
     throw new Error(`The number of characters in a number must be: ${secretChars.length}`);
