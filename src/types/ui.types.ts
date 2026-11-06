@@ -46,3 +46,8 @@ export interface BodyModalComponent {
   lengthSelect: SelectComponent;
   notationSelect: SelectComponent;
 }
+
+export interface GameHeaderComponent {
+  gameMode: string | number;
+  timeInSeconds: number;
+}
