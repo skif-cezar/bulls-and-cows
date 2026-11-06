@@ -1,4 +1,5 @@
 import { GameBoardConfig } from '../../../types/ui.types';
+import { createGameForm } from './gameForm';
 import { createGameHeader } from './gameHeader';
 
 export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: GameBoardConfig) => {
@@ -17,8 +18,9 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: Game
     timeInSeconds: timeInSeconds,
     onRestart,
   });
+  const gameForm = createGameForm();
 
-  gameBoard.append(gameHeader);
+  gameBoard.append(gameHeader, gameForm);
   modal.append(gameBoard);
 
   return modal;

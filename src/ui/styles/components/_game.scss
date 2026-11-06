@@ -6,6 +6,8 @@
   --game-border-color: #{$zinc-800};
   --game-text-color: #{$zinc-400};
   --game-accent-color: #{$indigo-400};
+  --border-color-input-focus: #{$indigo-500};
+  --border-color-input: #{$zinc-700};
 }
 
 .game {
@@ -58,5 +60,30 @@
       color: var(--game-accent-color);
       font-weight: var(--font-weight-bold);
     }
+  }
+}
+
+.guess-form {
+  display: flex;
+  gap: 8px;
+
+  & > .button {
+    max-width: 100px;
+  }
+}
+
+.guess-input {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: var(--font-size-lg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color-input);
+  background-color: var(--game-border-color);
+  color: var(--game-mode-color);
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  &:focus {
+    border-color: var(--border-color-input-focus);
   }
 }
