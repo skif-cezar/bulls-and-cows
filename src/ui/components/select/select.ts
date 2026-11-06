@@ -15,8 +15,9 @@ export const createSelect = ({ text, name, id, options, defaultValue, onChange }
   select.id = id;
 
   const renderOptions = (opts: typeof options, defVal?: string) => {
-    // Безопасная очистка без innerHTML (стандарт ES2019+)
     select.replaceChildren();
+
+    const fragment = document.createDocumentFragment();
 
     opts.forEach((optData) => {
       const option = document.createElement('option');
@@ -27,8 +28,10 @@ export const createSelect = ({ text, name, id, options, defaultValue, onChange }
         option.selected = true;
       }
 
-      select.appendChild(option);
+      fragment.appendChild(option);
     });
+
+    select.appendChild(fragment);
   };
 
   renderOptions(options, defaultValue);
@@ -47,9 +50,11 @@ export const createSelect = ({ text, name, id, options, defaultValue, onChange }
     getValue: () => select.value,
     updateOptions: (newOptions: typeof options, newDefaultValue?: string) => {
       const targetDefault = newDefaultValue ?? newOptions[0]?.value;
+
       renderOptions(newOptions, targetDefault);
-      if (onChange && targetDefault) {
-        onChange(targetDefault);
+
+      if (targetDefault) {
+        onChange?.(targetDefault);
       }
     },
   };
