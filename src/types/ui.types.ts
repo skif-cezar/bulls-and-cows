@@ -1,3 +1,5 @@
+import { Base, SecretLength } from './game.types';
+
 export interface ButtonConfig {
   text: string;
   id?: string;
@@ -50,4 +52,12 @@ export interface BodyModalComponent {
 export interface GameHeaderComponent {
   gameMode: string | number;
   timeInSeconds: number;
+  onRestart: () => void;
+}
+
+export interface GameBoardConfig {
+  base: Base;
+  length: SecretLength;
+  timeInSeconds: number;
+  onRestart: () => void;
 }

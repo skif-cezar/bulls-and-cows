@@ -1,6 +1,7 @@
 @use '../abstracts' as *;
 
 :root {
+  --game-mode-color: #{$zinc-100};
   --game-bg-color: #{$zinc-900};
   --game-border-color: #{$zinc-800};
   --game-text-color: #{$zinc-400};
@@ -43,6 +44,11 @@
   &-mode {
     padding-right: 8px;
     border-right: 2px solid var(--game-text-color);
+
+    .mode-value {
+      color: var(--game-mode-color);
+      font-weight: var(--font-weight-semibold);
+    }
   }
 
   &-time {

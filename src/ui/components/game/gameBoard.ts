@@ -1,6 +1,7 @@
+import { GameBoardConfig } from '../../../types/ui.types';
 import { createGameHeader } from './gameHeader';
 
-export const createGameBoard = () => {
+export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: GameBoardConfig) => {
   const modal = document.createElement('div');
   modal.classList.add('modal');
 
@@ -10,7 +11,12 @@ export const createGameBoard = () => {
   gameBoard.setAttribute('aria-label', 'Game Board');
   gameBoard.tabIndex = -1;
 
-  const gameHeader = createGameHeader({ gameMode: 111, timeInSeconds: 10 });
+  const gameMode = `${base} (${length})`;
+  const gameHeader = createGameHeader({
+    gameMode: gameMode.toUpperCase(),
+    timeInSeconds: timeInSeconds,
+    onRestart,
+  });
 
   gameBoard.append(gameHeader);
   modal.append(gameBoard);
