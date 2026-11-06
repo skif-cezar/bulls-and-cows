@@ -20,6 +20,12 @@ export interface SelectConfig {
   onChange?: (value: string) => void;
 }
 
+export interface SelectComponent {
+  element: HTMLDivElement;
+  getValue: () => string;
+  updateOptions: (newOptions: SelectOption[], newDefaultValue?: string) => void;
+}
+
 export interface ModalConfig {
   text: string;
   classNames?: string[];
@@ -33,4 +39,10 @@ export interface ModalConfig {
   attributesModal?: {
     [key: string]: string | undefined;
   };
+}
+
+export interface BodyModalComponent {
+  element: HTMLDivElement;
+  lengthSelect: SelectComponent;
+  notationSelect: SelectComponent;
 }

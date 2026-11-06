@@ -11,9 +11,6 @@ export const createModal = ({
   const modal = document.createElement('div');
   modal.classList.add(...classNames);
 
-  modal.inert = false;
-  modal.setAttribute('aria-hidden', 'false');
-
   Object.entries(attributesModal).forEach(([key, value]) => {
     if (value !== undefined) {
       modal.setAttribute(key, value);

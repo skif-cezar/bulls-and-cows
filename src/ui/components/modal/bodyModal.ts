@@ -1,10 +1,10 @@
 import { countPossibleSecrets } from '../../../core/countPossibleSecrets';
 import { SecretLength, Base } from '../../../types/game.types';
-import { SelectOption } from '../../../types/ui.types';
+import { BodyModalComponent, SelectOption } from '../../../types/ui.types';
 import { getAvailableLengthOptions } from '../../../utils/getAvailableLengthOptions';
 import { createSelect } from '../select/select';
 
-export const createBodyModal = (): HTMLDivElement => {
+export const createBodyModal = (): BodyModalComponent => {
   const body = document.createElement('div');
   body.classList.add('modal-body');
 
@@ -69,5 +69,9 @@ export const createBodyModal = (): HTMLDivElement => {
 
   updateCombinations();
 
-  return body;
+  return {
+    element: body,
+    lengthSelect,
+    notationSelect,
+  };
 };

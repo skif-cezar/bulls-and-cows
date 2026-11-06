@@ -1,6 +1,6 @@
-import { SelectConfig } from '../../../types/ui.types';
+import { SelectComponent, SelectConfig } from '../../../types/ui.types';
 
-export const createSelect = ({ text, name, id, options, defaultValue, onChange }: SelectConfig) => {
+export const createSelect = ({ text, name, id, options, defaultValue, onChange }: SelectConfig): SelectComponent => {
   const selectContainer = document.createElement('div');
   selectContainer.classList.add('container-select');
 
@@ -52,7 +52,6 @@ export const createSelect = ({ text, name, id, options, defaultValue, onChange }
       const targetDefault = newDefaultValue ?? newOptions[0]?.value;
 
       renderOptions(newOptions, targetDefault);
-
       if (targetDefault) {
         onChange?.(targetDefault);
       }
