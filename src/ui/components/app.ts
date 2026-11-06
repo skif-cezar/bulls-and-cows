@@ -1,5 +1,6 @@
 import { createButton } from './button/button';
-import { createSelect } from './select/select';
+import { createBodyModal } from './modal/bodyModal';
+import { createModal } from './modal/modal';
 
 export const createApp = (): HTMLDivElement => {
   const app = document.createElement('div');
@@ -13,27 +14,20 @@ export const createApp = (): HTMLDivElement => {
     },
   });
 
-  const notationOptions = [
-    { value: 'bin', label: 'bin' },
-    { value: 'oct', label: 'oct' },
-    { value: 'dec', label: 'dec' },
-    { value: 'hex', label: 'hex' },
-  ];
-
-  const notationSelect = createSelect({
-    text: 'Notation:',
-    name: 'notation',
-    id: 'notation-select',
-    options: notationOptions,
-    defaultValue: 'dec',
-
-    onChange: (value: string) => {
-      // eslint-disable-next-line no-console
-      console.log('Choosed notation:', value);
+  const startModal = createModal({
+    text: 'Bulls and Cows!',
+    attributesModal: {
+      'aria-hidden': 'false',
+    },
+    bodyContent: createBodyModal(),
+    actionsContent: [btnStartGame],
+    attributesDialog: {
+      'aria-modal': 'true',
+      'aria-label': 'Bulls and Cows!',
     },
   });
 
-  app.append(btnStartGame, notationSelect.element);
+  app.append(startModal);
 
   return app;
 };

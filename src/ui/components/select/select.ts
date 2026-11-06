@@ -14,17 +14,24 @@ export const createSelect = ({ text, name, id, options, defaultValue, onChange }
   select.name = name;
   select.id = id;
 
-  options.forEach((optData) => {
-    const option = document.createElement('option');
-    option.value = optData.value;
-    option.textContent = optData.label;
+  const renderOptions = (opts: typeof options, defVal?: string) => {
+    // Безопасная очистка без innerHTML (стандарт ES2019+)
+    select.replaceChildren();
 
-    if (defaultValue !== undefined && optData.value === defaultValue) {
-      option.selected = true;
-    }
+    opts.forEach((optData) => {
+      const option = document.createElement('option');
+      option.value = optData.value;
+      option.textContent = optData.label;
 
-    select.appendChild(option);
-  });
+      if (defVal !== undefined && optData.value === defVal) {
+        option.selected = true;
+      }
+
+      select.appendChild(option);
+    });
+  };
+
+  renderOptions(options, defaultValue);
 
   selectContainer.append(label, select);
 
@@ -38,5 +45,12 @@ export const createSelect = ({ text, name, id, options, defaultValue, onChange }
   return {
     element: selectContainer,
     getValue: () => select.value,
+    updateOptions: (newOptions: typeof options, newDefaultValue?: string) => {
+      const targetDefault = newDefaultValue ?? newOptions[0]?.value;
+      renderOptions(newOptions, targetDefault);
+      if (onChange && targetDefault) {
+        onChange(targetDefault);
+      }
+    },
   };
 };
