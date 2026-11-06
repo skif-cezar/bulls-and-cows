@@ -61,3 +61,8 @@ export interface GameBoardConfig {
   timeInSeconds: number;
   onRestart: () => void;
 }
+
+export interface gameFormComponent {
+  base: Base;
+  length: SecretLength;
+}

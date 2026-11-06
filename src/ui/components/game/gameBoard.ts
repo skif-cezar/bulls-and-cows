@@ -18,7 +18,7 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: Game
     timeInSeconds: timeInSeconds,
     onRestart,
   });
-  const gameForm = createGameForm();
+  const gameForm = createGameForm({ length: length, base: base });
 
   gameBoard.append(gameHeader, gameForm);
   modal.append(gameBoard);
