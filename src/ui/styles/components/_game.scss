@@ -7,13 +7,21 @@
 
 .game {
   &-board {
-    @extend %flex-column;
+@extend %flex-column;
+    height: auto;
+    transition: height 0.4s ease;
+
+
     width: 100%;
     max-width: 680px;
     padding: 24px;
     background-color: var(--bg-primary);
     border: 1px solid var(--border-primary);
     border-radius: 16px;
+
+    &.is-won {
+    grid-template-rows: auto 1fr auto;
+}
   }
 
   &-header {
@@ -56,7 +64,7 @@
 
   &-banner {
     display: none;
-    margin-top: 24px;
+    margin: 24px 0;
     flex-direction: column;
     align-items: center;
     gap: 8px;
@@ -64,6 +72,11 @@
     background-color: var(--bg-accent);
     border: 1px solid var(--border-accent);
     border-radius: 16px;
+
+    &.win-banner {
+    display: flex;
+    animation: fadeInBanner 0.4s ease forwards;
+}
   }
 
   &-body {
@@ -92,8 +105,7 @@
 }
 
 .input-container {
-  display: flex;
-  flex-direction: column;
+  @extend %flex-column;
   gap: 6px;
   width: 100%;
 }
@@ -129,9 +141,7 @@
   }
 }
 
-.win-banner {
-  display: flex;
-}
+
 
 .records {
   &-title {
@@ -180,4 +190,15 @@
       border-color: var(--focus-color);
     }
   }
+}
+
+@keyframes fadeInBanner {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

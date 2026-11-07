@@ -23,6 +23,12 @@ export const createWinBanner = (): WinBannerComponent => {
   sectionBanner.append(bannerTitle, bannerText);
 
   const showWin = (secret: string, attemptsCount: number, timeInSeconds: number): void => {
+    const gameForm = document.getElementById('guess-form');
+
+    if (gameForm) {
+      gameForm.style.display = 'none';
+      gameForm.hidden = true;
+    }
     secretNumber.textContent = secret;
     const attemptWord = attemptsCount === 1 ? 'attempt' : 'attempts';
     result.textContent = `${attemptsCount} ${attemptWord} ( ${timeInSeconds} sec )`;
