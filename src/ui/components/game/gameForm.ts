@@ -19,6 +19,9 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
   form.classList.add('guess-form');
   form.id = 'guess-form';
 
+  const inputContainer = document.createElement('div');
+  inputContainer.classList.add('input-container');
+
   const input = document.createElement('input');
   input.classList.add('guess-input');
   input.id = 'guess-input';
@@ -30,6 +33,8 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
 
   const errorContainer = document.createElement('div');
   errorContainer.classList.add('guess-error-message');
+
+  inputContainer.append(input, errorContainer);
 
   input.addEventListener('keydown', (event: KeyboardEvent) => {
     if (
@@ -86,7 +91,7 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
     input.value = '';
   });
 
-  form.append(input, btnEnter);
+  form.append(inputContainer, btnEnter);
 
   return form;
 };

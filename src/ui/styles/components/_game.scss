@@ -8,7 +8,6 @@
 .game {
   &-board {
     @extend %flex-column;
-    gap: 24px;
     width: 100%;
     max-width: 680px;
     padding: 24px;
@@ -57,6 +56,7 @@
 
   &-banner {
     display: none;
+    margin-top: 24px;
     flex-direction: column;
     align-items: center;
     gap: 8px;
@@ -70,6 +70,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+    margin-top: 6px;
   }
 
   &-section {
@@ -88,6 +89,19 @@
       text-transform: uppercase;
     }
   }
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.guess-error-message {
+  color: var(--text-error);
+  font-size: 0.75rem;
+  min-height: 18px;
 }
 
 .banner {
@@ -143,9 +157,11 @@
   &-form {
     display: flex;
     gap: 8px;
+    margin-top: 24px;
 
     > .button {
       max-width: 100px;
+      align-self: flex-start;
     }
   }
 
