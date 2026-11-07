@@ -1,4 +1,6 @@
-export const createWinBanner = (): HTMLElement => {
+import { WinBannerComponent } from '../../../types/ui.types';
+
+export const createWinBanner = (): WinBannerComponent => {
   const sectionBanner = document.createElement('section');
   sectionBanner.classList.add('game-banner');
   sectionBanner.hidden = true;
@@ -13,15 +15,25 @@ export const createWinBanner = (): HTMLElement => {
 
   const secretNumber = document.createElement('code');
   secretNumber.classList.add('banner-code');
-  secretNumber.textContent = '7324';
 
   const result = document.createElement('span');
-  result.textContent = '2 attempt ( 10 sec )';
   result.classList.add('banner-result');
 
   bannerText.append('The secret number ', secretNumber, ' was guessed in ', result);
-
   sectionBanner.append(bannerTitle, bannerText);
 
-  return sectionBanner;
+  const showWin = (secret: string, attemptsCount: number, timeInSeconds: number): void => {
+    secretNumber.textContent = secret;
+    const attemptWord = attemptsCount === 1 ? 'attempt' : 'attempts';
+    result.textContent = `${attemptsCount} ${attemptWord} ( ${timeInSeconds} sec )`;
+
+    sectionBanner.hidden = false;
+    sectionBanner.removeAttribute('aria-live');
+    sectionBanner.classList.add('win-banner');
+  };
+
+  return {
+    element: sectionBanner,
+    showWin,
+  };
 };

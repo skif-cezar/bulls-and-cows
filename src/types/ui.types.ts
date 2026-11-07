@@ -67,3 +67,8 @@ export interface GameFormProps {
   base: Base;
   onGuessSubmit: (guess: string) => void;
 }
+
+export interface WinBannerComponent {
+  element: HTMLElement;
+  showWin: (secret: string, attemptsCount: number, timeInSeconds: number) => void;
+}

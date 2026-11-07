@@ -1,6 +1,6 @@
 import { evaluateGuess } from '../core/evaluateGuess';
 import { generateSecret } from '../core/generateSecret';
-import { addAttemptToState, createInitialState } from '../state/state';
+import { addAttemptToState, createInitialState, setGameStatus } from '../state/state';
 import { Base, SecretLength, GameState, HistoryEntry } from '../types/game.types';
 import { clearGameTimer, startGameTimer } from '../utils/gameTimer';
 import { createButton } from './components/button/button';
@@ -54,14 +54,18 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
  * Render the game board (game screen)
  */
 export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState): void => {
-  const gameBoard = createGameBoard({
+  let elapsedTime = 0;
+
+  const { modal, winBannerComponent, gameForm } = createGameBoard({
     base: state.settings.base,
     length: state.settings.length,
-    timeInSeconds: 0,
+    timeInSeconds: elapsedTime,
     onRestart: () => {
       renderStartScreen(appContainer);
     },
     onGuessSubmit: (guessValue) => {
+      if (state.status !== 'playing') return;
+
       const { bulls, cows } = evaluateGuess(state.settings.secret, guessValue);
 
       const historyEntry: HistoryEntry = {
@@ -75,16 +79,26 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
       // eslint-disable-next-line no-console
       console.log('Current Game History:', state.history);
 
+      // Логика победы
       if (bulls === state.settings.length) {
-        // eslint-disable-next-line no-console
-        console.log('Victory! You guessed the secret number!');
+        state = setGameStatus(state, 'won');
+        clearGameTimer();
+
+        // 1. Показываем баннер через метод самого компонента
+        winBannerComponent.showWin(state.settings.secret, state.history.length, elapsedTime);
+
+        const guessInput = gameForm.querySelector('#guess-input') as HTMLInputElement;
+        const submitBtn = gameForm.querySelector('button');
+        if (guessInput) guessInput.disabled = true;
+        if (submitBtn) submitBtn.setAttribute('disabled', 'true');
       }
     },
   });
 
-  appContainer.replaceChildren(gameBoard);
+  appContainer.replaceChildren(modal);
 
   startGameTimer((currentTime) => {
+    elapsedTime = currentTime;
     const timeValueElement = document.getElementById('game-time-value');
     if (timeValueElement) {
       timeValueElement.textContent = `${currentTime} sec`;
