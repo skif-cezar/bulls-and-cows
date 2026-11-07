@@ -1,4 +1,5 @@
 import { createDigitValidator } from '../../../core/createDigitValidator';
+import { isValidGuess } from '../../../core/isValidGuess';
 import { gameFormComponent } from '../../../types/ui.types';
 import { createButton } from '../button/button';
 
@@ -27,6 +28,9 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
   input.autocomplete = 'off';
   input.autofocus = true;
 
+  const errorContainer = document.createElement('div');
+  errorContainer.classList.add('guess-error-message');
+
   input.addEventListener('keydown', (event: KeyboardEvent) => {
     if (
       event.key === 'Backspace' ||
@@ -46,6 +50,11 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
   });
 
   input.addEventListener('input', () => {
+    if (errorContainer.textContent) {
+      errorContainer.textContent = '';
+      input.classList.remove('error');
+    }
+
     const filteredValue = input.value
       .split('')
       .filter((char) => isValidDigit(char))
@@ -60,14 +69,19 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
     event.preventDefault();
 
     const value = input.value.trim();
+    const validation = isValidGuess(value, length, base);
 
-    if (value.length) {
-      // eslint-disable-next-line no-console
-      console.log('value: ', value);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('Введите символ');
+    if (!validation.isValid) {
+      console.warn('Validation failed:', validation.error);
+
+      errorContainer.textContent = validation.error || 'Invalid input';
+      input.classList.add('error');
+      return;
     }
+
+    errorContainer.textContent = '';
+    // eslint-disable-next-line no-console
+    console.log('Valid guess submitted: ', value);
 
     input.value = '';
   });

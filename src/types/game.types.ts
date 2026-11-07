@@ -16,6 +16,11 @@ export type EvaluationResult = {
 
 export type GameStatus = 'playing' | 'won' | 'lost';
 
+export interface ValidationResult {
+  isValid: boolean;
+  error?: string;
+}
+
 export type HistoryEntry = {
   guess: string;
   bulls: number;

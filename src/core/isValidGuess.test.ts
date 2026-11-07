@@ -8,9 +8,10 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'dec';
 
-      const isValid: boolean = isValidGuess(guess, length, base);
+      const result = isValidGuess(guess, length, base);
 
-      expect(isValid).toBe(true);
+      expect(result.isValid).toBe(true);
+      expect(result.error).toBeUndefined();
     });
 
     it('должен возвращать true для шестнадцатеричной попытки с буквенными символами', () => {
@@ -18,9 +19,10 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'hex';
 
-      const isValid: boolean = isValidGuess(guess, length, base);
+      const result = isValidGuess(guess, length, base);
 
-      expect(isValid).toBe(true);
+      expect(result.isValid).toBe(true);
+      expect(result.error).toBeUndefined();
     });
   });
 
@@ -30,7 +32,11 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'dec';
 
-      expect(isValidGuess(guess, length, base)).toBe(false);
+      const result = isValidGuess(guess, length, base);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('Length error');
     });
 
     it('должен возвращать false, если длина попытки больше ожидаемой', () => {
@@ -38,7 +44,11 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'dec';
 
-      expect(isValidGuess(guess, length, base)).toBe(false);
+      const result = isValidGuess(guess, length, base);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('Length error');
     });
   });
 
@@ -49,7 +59,11 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 2;
       const base: Base = 'bin';
 
-      expect(isValidGuess(guess, length, base)).toBe(false);
+      const result = isValidGuess(guess, length, base);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('Invalid character');
     });
 
     it('должен возвращать false при наличии недопустимых буквенных символов для десятичной системы', () => {
@@ -57,7 +71,11 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'dec';
 
-      expect(isValidGuess(guess, length, base)).toBe(false);
+      const result = isValidGuess(guess, length, base);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('Invalid character');
     });
   });
 
@@ -67,7 +85,11 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'dec';
 
-      expect(isValidGuess(guess, length, base)).toBe(false);
+      const result = isValidGuess(guess, length, base);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('Uniqueness error');
     });
 
     it('должен возвращать false, если все цифры одинаковые', () => {
@@ -75,7 +97,11 @@ describe('isValidGuess()', () => {
       const length: SecretLength = 4;
       const base: Base = 'dec';
 
-      expect(isValidGuess(guess, length, base)).toBe(false);
+      const result = isValidGuess(guess, length, base);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('Uniqueness error');
     });
   });
 });
