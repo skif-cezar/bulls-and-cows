@@ -1,13 +1,5 @@
 @use '../abstracts' as *;
 
-:root {
-  --color-select: #{$zinc-100};
-  --bg-color-select: #{$zinc-800};
-  --border-color-select: #{$zinc-700};
-  --border-color-select-hover: #{$zinc-600};
-  --border-color-select-focus: #{$indigo-500};
-}
-
 .container-select {
   width: 100%;
   display: flex;
@@ -17,11 +9,11 @@
 
 .select {
   width: 100%;
-  color: var(--color-select);
+  color: var(--text-secondary);
   padding: 10px 12px;
   padding-right: 40px;
-  background-color: var(--bg-color-select);
-  border: 1px solid var(--border-color-select);
+  background-color: var(--bg-controls);
+  border: 1px solid var(--border-controls);
   border-radius: 12px;
   text-transform: none;
   cursor: pointer;
@@ -36,16 +28,16 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
   &:hover {
-    border-color: var(--border-color-select-hover);
+    border-color: var(--border-controls-hover);
   }
 
   &:focus {
     outline: none;
-    border-color: var(--border-color-select-focus);
+    border-color: var(--focus-color);
   }
 
   & > option {
-    background-color: var(--bg-color-select);
+    background-color: var(--bg-controls);
     padding: 12px;
   }
 }

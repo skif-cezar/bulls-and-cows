@@ -1,13 +1,5 @@
 @use '../abstracts' as *;
 
-:root {
-  --modal-bg-color: #{$zinc-900};
-  --modal-border-color: #{$zinc-800};
-  --title-color: #{$indigo-400};
-  --message-color: #{$zinc-400};
-  --message-bg-color: #{$zinc-800-50};
-}
-
 .modal {
   display: flex;
   align-items: center;
@@ -24,8 +16,8 @@
     width: 100%;
     max-width: 448px;
     padding: 24px;
-    background-color: var(--modal-bg-color);
-    border: 1px solid var(--modal-border-color);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
     border-radius: 16px;
   }
 
@@ -34,7 +26,7 @@
     align-items: center;
     gap: 8px;
     justify-content: center;
-    color: var(--title-color);
+    color: var(--text-accent);
     letter-spacing: -0.025em;
     font-size: var(--font-size-2xl);
     text-align: center;
@@ -67,15 +59,15 @@
     text-align: center;
     font-size: 0.875rem;
     line-height: var(--font-size-base);
-    color: var(--message-color);
-    background-color: var(--message-bg-color);
-    border: 1px solid var(--modal-border-color);
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 12px;
     font-weight: var(--font-weight-regular);
   }
 
   &-combinations {
-    color: var(--title-color);
+    color: var(--text-accent);
     font-weight: var(--font-weight-bold);
   }
 }

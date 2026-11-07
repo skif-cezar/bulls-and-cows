@@ -1,4 +1,5 @@
 import { GameBoardConfig } from '../../../types/ui.types';
+import { createGameBody } from './gameBody';
 import { createGameForm } from './gameForm';
 import { createGameHeader } from './gameHeader';
 
@@ -6,7 +7,7 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: Game
   const modal = document.createElement('div');
   modal.classList.add('modal');
 
-  const gameBoard = document.createElement('div');
+  const gameBoard = document.createElement('article');
   gameBoard.classList.add('game-board');
   gameBoard.setAttribute('role', 'region');
   gameBoard.setAttribute('aria-label', 'Game Board');
@@ -19,8 +20,9 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: Game
     onRestart,
   });
   const gameForm = createGameForm({ length: length, base: base });
+  const gameBody = createGameBody();
 
-  gameBoard.append(gameHeader, gameForm);
+  gameBoard.append(gameHeader, gameForm, gameBody);
   modal.append(gameBoard);
 
   return modal;

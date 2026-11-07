@@ -1,17 +1,11 @@
 @use '../abstracts' as *;
 
-:root {
-  --color-btn: #{$white};
-  --bg-color-btn: #{$indigo-600};
-  --bg-color-bth-hover: #{$indigo-500};
-}
-
 .button {
   width: 100%;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-btn);
+  color: var(--text-secondary);
   padding: 12px;
-  background-color: var(--bg-color-btn);
+  background-color: var(--btn-bg-primary);
   border-radius: 12px;
   box-shadow:
     0 0 #0000,
@@ -22,5 +16,5 @@
 }
 
 .button:hover {
-  background-color: var(--bg-color-bth-hover);
+  background-color: var(--btn-bg-primary-hover);
 }

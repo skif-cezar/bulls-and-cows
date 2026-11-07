@@ -1,7 +1,7 @@
 import { GameHeaderComponent } from '../../../types/ui.types';
 import { createButton } from '../button/button';
 
-export const createGameHeader = ({ gameMode, timeInSeconds, onRestart }: GameHeaderComponent): HTMLDivElement => {
+export const createGameHeader = ({ gameMode, timeInSeconds, onRestart }: GameHeaderComponent): HTMLElement => {
   const btnRestartGame = createButton({
     text: 'Restart Game',
     id: 'btn-restart-game',
@@ -12,7 +12,7 @@ export const createGameHeader = ({ gameMode, timeInSeconds, onRestart }: GameHea
 
   btnRestartGame.addEventListener('click', onRestart);
 
-  const gameHeader = document.createElement('div');
+  const gameHeader = document.createElement('header');
   gameHeader.classList.add('game-header');
 
   const gameMeta = document.createElement('div');

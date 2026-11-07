@@ -1,26 +1,15 @@
 @use '../abstracts' as *;
 
-:root {
-  --game-mode-color: #{$zinc-100};
-  --game-bg-color: #{$zinc-900};
-  --game-border-color: #{$zinc-800};
-  --game-text-color: #{$zinc-400};
-  --game-accent-color: #{$indigo-400};
-  --border-color-input-focus: #{$indigo-500};
-  --border-color-input: #{$zinc-700};
-}
-
 .game {
   &-board {
     display: flex;
     flex-direction: column;
-
     gap: 24px;
     width: 100%;
-    max-width: 664px;
+    max-width: 680px;
     padding: 24px;
-    background-color: var(--game-bg-color);
-    border: 1px solid var(--game-border-color);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
     border-radius: 16px;
   }
 
@@ -29,7 +18,7 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 16px;
-    border-bottom: 1px solid var(--game-border-color);
+    border-bottom: 1px solid var(--border-primary);
 
     & > .button {
       max-width: 144px;
@@ -40,15 +29,15 @@
     font-weight: var(--font-weight-regular);
     font-size: 0.875rem;
     line-height: var(--font-size-base);
-    color: var(--game-text-color);
+    color: var(--text-primary);
   }
 
   &-mode {
     padding-right: 8px;
-    border-right: 2px solid var(--game-text-color);
+    border-right: 2px solid var(--text-primary);
 
     .mode-value {
-      color: var(--game-mode-color);
+      color: var(--text-secondary);
       font-weight: var(--font-weight-semibold);
     }
   }
@@ -57,9 +46,54 @@
     padding-left: 8px;
 
     .time-value {
-      color: var(--game-accent-color);
+      color: var(--text-accent);
       font-weight: var(--font-weight-bold);
     }
+  }
+
+  &-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  &-section {
+    display: flex;
+    flex-direction: column;
+    height: 192px;
+    padding: 12px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-secondary);
+    border-radius: 12px;
+
+    &-title {
+      color: var(--text-primary);
+      text-transform: uppercase;
+      font-weight: var(--font-weight-semibold);
+      font-size: 0.75rem;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.records-title {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 24px;
+
+  &::before {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url('/public/assets/images/rank-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 
@@ -77,13 +111,13 @@
   padding: 10px 12px;
   font-size: var(--font-size-lg);
   border-radius: 12px;
-  border: 1px solid var(--border-color-input);
-  background-color: var(--game-border-color);
-  color: var(--game-mode-color);
+  border: 1px solid var(--border-controls);
+  background-color: var(--border-primary);
+  color: var(--text-secondary);
   outline: none;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
   &:focus {
-    border-color: var(--border-color-input-focus);
+    border-color: var(--focus-color);
   }
 }

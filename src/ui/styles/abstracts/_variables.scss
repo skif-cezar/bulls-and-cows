@@ -2,13 +2,14 @@
 $indigo-400: #818cf8;
 $indigo-600: #4f46e5;
 $indigo-500: #6366f1;
+$indigo-800: #3730a3;
+$indigo-950: #1e1b4b;
 $zinc-100: #f4f4f5;
 $zinc-300: #d4d4d8;
 $zinc-400: #a1a1aa;
 $zinc-600: #52525b;
 $zinc-700: #3f3f46;
 $zinc-800: #27272a;
-$zinc-800-50: rgb(39 39 42 / 0.5);
 $zinc-900: #18181b;
 $zinc-950: #09090b;
 $white: #ffffff;
@@ -31,4 +32,27 @@ $white: #ffffff;
   --line-height-snug: 1.25;
   --line-height-base: 1.5;
   --line-height-relaxed: 2;
+
+  // --- Colors ---
+  --text-primary: #{$zinc-400};
+  --text-secondary: #{$zinc-300};
+  --text-accent: #{$indigo-400};
+  //--text-error:
+
+  --bg-main: #{$zinc-950};
+  --bg-primary: #{$zinc-900};
+  --bg-secondary: #{rgba($zinc-800, 0.4)};
+  --bg-accent: #{rgba($indigo-950, 0.4)};
+  --bg-controls: #{$zinc-800};
+
+  --border-primary: #{$zinc-800};
+  --border-secondary: #{rgba($zinc-800, 0.8)};
+  --border-accent: #{rgba($indigo-800, 0.5)};
+  --border-controls: #{$zinc-700};
+  --border-controls-hover: #{$zinc-600};
+
+  --btn-bg-primary: #{$indigo-600};
+  --btn-bg-primary-hover: #{$indigo-500};
+
+  --focus-color: #{$indigo-500};
 }

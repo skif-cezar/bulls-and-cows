@@ -11,20 +11,14 @@ html {
   font-size: var(--font-size-base);
 }
 
-:root {
-  --color-primary: #{$zinc-300};
-  --bg-color: #{$zinc-950};
-  --focus-color: #{$indigo-500};
-}
-
 body {
   position: relative;
   min-height: 100dvh;
-  color: var(--color-primary);
+  color: var(--text-secondary);
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-medium);
   overflow-x: hidden;
-  background: var(--bg-color);
+  background: var(--bg-main);
 }
 
 button {
