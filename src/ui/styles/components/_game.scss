@@ -7,10 +7,9 @@
 
 .game {
   &-board {
-@extend %flex-column;
+    @extend %flex-column;
     height: auto;
     transition: height 0.4s ease;
-
 
     width: 100%;
     max-width: 680px;
@@ -20,8 +19,8 @@
     border-radius: 16px;
 
     &.is-won {
-    grid-template-rows: auto 1fr auto;
-}
+      grid-template-rows: auto 1fr auto;
+    }
   }
 
   &-header {
@@ -74,9 +73,9 @@
     border-radius: 16px;
 
     &.win-banner {
-    display: flex;
-    animation: fadeInBanner 0.4s ease forwards;
-}
+      display: flex;
+      animation: fadeInBanner 0.4s ease forwards;
+    }
   }
 
   &-body {
@@ -141,8 +140,6 @@
   }
 }
 
-
-
 .records {
   &-title {
     position: relative;
@@ -190,15 +187,96 @@
       border-color: var(--focus-color);
     }
   }
+
+  &-number {
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+  }
+
+  &-result {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.history,
+.records {
+  &-list,
+  &-list {
+    list-style: none;
+    counter-reset: my-counter;
+    padding-left: 0;
+
+    & li {
+      counter-increment: my-counter;
+      position: relative;
+      margin-bottom: 8px;
+
+      &::before {
+        content: '#' counter(my-counter) ' ';
+        margin-right: 6px;
+      }
+    }
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    background-color: var(--bg-controls);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    color: var(--text-primary);
+  }
+}
+
+.item-bulls::before,
+.item-cows::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-bulls::before {
+background-image: url('/public/assets/images/bull-count-icon.png');
+}
+
+.item-cows::before {
+background-image: url('/public/assets/images/cow-count-icon.png');
+}
+
+.item-bulls, .item-cows {
+     display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+
+.item-bulls {
+  color: var(--text-succes);
+}
+
+.item-cows {
+  color: var(--text-warn);
 }
 
 @keyframes fadeInBanner {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

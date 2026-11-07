@@ -22,14 +22,15 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart, onGues
   });
   const winBannerComponent = createWinBanner();
   const gameForm = createGameForm({ length, base, onGuessSubmit });
-  const gameBody = createGameBody();
+  const gameBodyComponent = createGameBody();
 
-  gameBoard.append(gameHeader, winBannerComponent.element, gameForm, gameBody);
+  gameBoard.append(gameHeader, winBannerComponent.element, gameForm, gameBodyComponent.element);
   modal.append(gameBoard);
 
   return {
     modal,
     winBannerComponent,
     gameForm,
+    gameBodyComponent,
   };
 };

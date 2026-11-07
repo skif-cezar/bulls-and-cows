@@ -56,7 +56,7 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
 export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState): void => {
   let elapsedTime = 0;
 
-  const { modal, winBannerComponent, gameForm } = createGameBoard({
+  const { modal, winBannerComponent, gameForm, gameBodyComponent } = createGameBoard({
     base: state.settings.base,
     length: state.settings.length,
     timeInSeconds: elapsedTime,
@@ -76,15 +76,13 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
 
       state = addAttemptToState(state, historyEntry);
 
-      // eslint-disable-next-line no-console
-      console.log('Current Game History:', state.history);
+      gameBodyComponent.updateHistory(state.history);
 
-      // Логика победы
+      // Win logic
       if (bulls === state.settings.length) {
         state = setGameStatus(state, 'won');
         clearGameTimer();
 
-        // 1. Показываем баннер через метод самого компонента
         winBannerComponent.showWin(state.settings.secret, state.history.length, elapsedTime);
 
         const guessInput = gameForm.querySelector('#guess-input') as HTMLInputElement;

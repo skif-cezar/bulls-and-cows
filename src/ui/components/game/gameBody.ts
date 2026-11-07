@@ -1,4 +1,7 @@
-export const createGameBody = (): HTMLElement => {
+import { HistoryEntry } from '../../../types/game.types';
+import { GameBodyComponent } from '../../../types/ui.types';
+
+export const createGameBody = (): GameBodyComponent => {
   const gameBody = document.createElement('div');
   gameBody.classList.add('game-body');
 
@@ -26,5 +29,38 @@ export const createGameBody = (): HTMLElement => {
   sectionRecords.append(sectionRecordsTitle, recordsList);
   gameBody.append(sectionHistory, sectionRecords);
 
-  return gameBody;
+  // A method for updating the history list and the counter in the header
+  const updateHistory = (history: HistoryEntry[]): void => {
+    sectionHistoryTitle.textContent = `A History of Attempts (${history.length})`;
+    historyList.replaceChildren();
+
+    history.forEach((entry) => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('history-item');
+
+      const guessNumber = document.createElement('span');
+      guessNumber.classList.add('guess-number');
+      guessNumber.textContent = `${entry.guess}`;
+
+      const guessResult = document.createElement('div');
+      guessResult.classList.add('guess-result');
+
+      const bulls = document.createElement('span');
+      bulls.classList.add('item-bulls');
+      bulls.textContent = `${entry.bulls}`;
+
+      const cows = document.createElement('span');
+      cows.classList.add('item-cows');
+      cows.textContent = `${entry.cows}`;
+
+      guessResult.append(bulls, cows);
+      listItem.append(guessNumber, guessResult);
+      historyList.append(listItem);
+    });
+  };
+
+  return {
+    element: gameBody,
+    updateHistory,
+  };
 };

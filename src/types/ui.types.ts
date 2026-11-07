@@ -1,4 +1,4 @@
-import { Base, SecretLength } from './game.types';
+import { Base, HistoryEntry, SecretLength } from './game.types';
 
 export interface ButtonConfig {
   text: string;
@@ -71,4 +71,9 @@ export interface GameFormProps {
 export interface WinBannerComponent {
   element: HTMLElement;
   showWin: (secret: string, attemptsCount: number, timeInSeconds: number) => void;
+}
+
+export interface GameBodyComponent {
+  element: HTMLElement;
+  updateHistory: (history: HistoryEntry[]) => void;
 }

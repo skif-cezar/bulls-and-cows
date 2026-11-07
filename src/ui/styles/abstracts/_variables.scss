@@ -12,6 +12,8 @@ $zinc-800: #27272a;
 $zinc-900: #18181b;
 $zinc-950: #09090b;
 $rose-400: #fb7185;
+$emerald-400: #34d399;
+$amber-400: #fbbf24;
 
 :root {
   // --- Typography ---
@@ -37,6 +39,8 @@ $rose-400: #fb7185;
   --text-secondary: #{$zinc-300};
   --text-accent: #{$indigo-400};
   --text-error: #{$rose-400};
+  --text-succes: #{$emerald-400};
+  --text-warn: #{$amber-400};
 
   --bg-main: #{$zinc-950};
   --bg-primary: #{$zinc-900};
