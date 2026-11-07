@@ -1,6 +1,7 @@
+import { evaluateGuess } from '../core/evaluateGuess';
 import { generateSecret } from '../core/generateSecret';
-import { createInitialState } from '../state/state';
-import { Base, SecretLength, GameState } from '../types/game.types';
+import { addAttemptToState, createInitialState } from '../state/state';
+import { Base, SecretLength, GameState, HistoryEntry } from '../types/game.types';
 import { clearGameTimer, startGameTimer } from '../utils/gameTimer';
 import { createButton } from './components/button/button';
 import { createGameBoard } from './components/game/gameBoard';
@@ -59,6 +60,25 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
     timeInSeconds: 0,
     onRestart: () => {
       renderStartScreen(appContainer);
+    },
+    onGuessSubmit: (guessValue) => {
+      const { bulls, cows } = evaluateGuess(state.settings.secret, guessValue);
+
+      const historyEntry: HistoryEntry = {
+        guess: guessValue,
+        bulls,
+        cows,
+      };
+
+      state = addAttemptToState(state, historyEntry);
+
+      // eslint-disable-next-line no-console
+      console.log('Current Game History:', state.history);
+
+      if (bulls === state.settings.length) {
+        // eslint-disable-next-line no-console
+        console.log('Victory! You guessed the secret number!');
+      }
     },
   });
 

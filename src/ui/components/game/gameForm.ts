@@ -1,9 +1,9 @@
 import { createDigitValidator } from '../../../core/createDigitValidator';
 import { isValidGuess } from '../../../core/isValidGuess';
-import { gameFormComponent } from '../../../types/ui.types';
+import { GameFormProps } from '../../../types/ui.types';
 import { createButton } from '../button/button';
 
-export const createGameForm = ({ length, base }: gameFormComponent) => {
+export const createGameForm = ({ length, base, onGuessSubmit }: GameFormProps) => {
   const isValidDigit = createDigitValidator(base);
 
   const btnEnter = createButton({
@@ -81,12 +81,13 @@ export const createGameForm = ({ length, base }: gameFormComponent) => {
 
       errorContainer.textContent = validation.error || 'Invalid input';
       input.classList.add('error');
+
       return;
     }
 
     errorContainer.textContent = '';
-    // eslint-disable-next-line no-console
-    console.log('Valid guess submitted: ', value);
+
+    onGuessSubmit(value);
 
     input.value = '';
   });

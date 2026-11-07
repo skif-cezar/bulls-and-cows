@@ -60,9 +60,10 @@ export interface GameBoardConfig {
   length: SecretLength;
   timeInSeconds: number;
   onRestart: () => void;
+  onGuessSubmit: (guess: string) => void;
 }
-
-export interface gameFormComponent {
-  base: Base;
+export interface GameFormProps {
   length: SecretLength;
+  base: Base;
+  onGuessSubmit: (guess: string) => void;
 }

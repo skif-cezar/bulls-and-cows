@@ -4,7 +4,7 @@ import { createGameForm } from './gameForm';
 import { createGameHeader } from './gameHeader';
 import { createWinBanner } from './gameWinBanner';
 
-export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: GameBoardConfig) => {
+export const createGameBoard = ({ base, length, timeInSeconds, onRestart, onGuessSubmit }: GameBoardConfig) => {
   const modal = document.createElement('div');
   modal.classList.add('modal');
 
@@ -21,7 +21,7 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: Game
     onRestart,
   });
   const gameWinBanner = createWinBanner();
-  const gameForm = createGameForm({ length: length, base: base });
+  const gameForm = createGameForm({ length: length, base: base, onGuessSubmit });
   const gameBody = createGameBody();
 
   gameBoard.append(gameHeader, gameWinBanner, gameForm, gameBody);
