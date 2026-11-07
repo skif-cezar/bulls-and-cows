@@ -1,9 +1,13 @@
 @use '../abstracts' as *;
 
+%flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .game {
   &-board {
-    display: flex;
-    flex-direction: column;
+    @extend %flex-column;
     gap: 24px;
     width: 100%;
     max-width: 680px;
@@ -20,14 +24,14 @@
     padding-bottom: 16px;
     border-bottom: 1px solid var(--border-primary);
 
-    & > .button {
+    > .button {
       max-width: 144px;
     }
   }
 
   &-meta {
-    font-weight: var(--font-weight-regular);
     font-size: 0.875rem;
+    font-weight: var(--font-weight-regular);
     line-height: var(--font-size-base);
     color: var(--text-primary);
   }
@@ -51,6 +55,17 @@
     }
   }
 
+  &-banner {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    background-color: var(--bg-accent);
+    border: 1px solid var(--border-accent);
+    border-radius: 16px;
+  }
+
   &-body {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -58,8 +73,7 @@
   }
 
   &-section {
-    display: flex;
-    flex-direction: column;
+    @extend %flex-column;
     height: 192px;
     padding: 12px;
     background-color: var(--bg-secondary);
@@ -67,57 +81,87 @@
     border-radius: 12px;
 
     &-title {
-      color: var(--text-primary);
-      text-transform: uppercase;
-      font-weight: var(--font-weight-semibold);
-      font-size: 0.75rem;
       margin-bottom: 8px;
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
     }
   }
 }
 
-.records-title {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  padding-left: 24px;
+.banner {
+  &-title {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    color: var(--text-accent);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+  }
 
-  &::before {
-    position: absolute;
-    top: -1px;
-    left: 0;
-    content: '';
-    display: block;
-    width: 16px;
-    height: 16px;
-    background-image: url('/public/assets/images/rank-icon.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  &-text {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  &-code,
+  &-result {
+    padding: 2px 8px;
+    color: var(--text-accent);
+    background-color: var(--bg-controls);
+    border-radius: 4px;
+    font-weight: var(--font-weight-medium);
   }
 }
 
-.guess-form {
+.win-banner {
   display: flex;
-  gap: 8px;
+}
 
-  & > .button {
-    max-width: 100px;
+.records {
+  &-title {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding-left: 24px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url('/public/assets/images/rank-icon.png') center / cover no-repeat;
+    }
   }
 }
 
-.guess-input {
-  flex: 1;
-  padding: 10px 12px;
-  font-size: var(--font-size-lg);
-  border-radius: 12px;
-  border: 1px solid var(--border-controls);
-  background-color: var(--border-primary);
-  color: var(--text-secondary);
-  outline: none;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+.guess {
+  &-form {
+    display: flex;
+    gap: 8px;
 
-  &:focus {
-    border-color: var(--focus-color);
+    > .button {
+      max-width: 100px;
+    }
+  }
+
+  &-input {
+    flex: 1;
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    background-color: var(--border-primary);
+    border: 1px solid var(--border-controls);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    outline: none;
+
+    &:focus {
+      border-color: var(--focus-color);
+    }
   }
 }

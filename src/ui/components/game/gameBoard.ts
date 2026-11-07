@@ -2,6 +2,7 @@ import { GameBoardConfig } from '../../../types/ui.types';
 import { createGameBody } from './gameBody';
 import { createGameForm } from './gameForm';
 import { createGameHeader } from './gameHeader';
+import { createWinBanner } from './gameWinBanner';
 
 export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: GameBoardConfig) => {
   const modal = document.createElement('div');
@@ -19,10 +20,11 @@ export const createGameBoard = ({ base, length, timeInSeconds, onRestart }: Game
     timeInSeconds: timeInSeconds,
     onRestart,
   });
+  const gameWinBanner = createWinBanner();
   const gameForm = createGameForm({ length: length, base: base });
   const gameBody = createGameBody();
 
-  gameBoard.append(gameHeader, gameForm, gameBody);
+  gameBoard.append(gameHeader, gameWinBanner, gameForm, gameBody);
   modal.append(gameBoard);
 
   return modal;
