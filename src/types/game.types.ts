@@ -23,6 +23,7 @@ export type HistoryEntry = {
 };
 
 export type GameSettings = {
+  secret: string;
   length: SecretLength;
   base: Base;
 };

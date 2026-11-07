@@ -1,3 +1,4 @@
+import { generateSecret } from '../core/generateSecret';
 import { createInitialState } from '../state/state';
 import { Base, SecretLength, GameState } from '../types/game.types';
 import { clearGameTimer, startGameTimer } from '../utils/gameTimer';
@@ -35,8 +36,12 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
   btnStartGame.addEventListener('click', () => {
     const base = bodyModalData.notationSelect.getValue() as Base;
     const length = Number(bodyModalData.lengthSelect.getValue()) as SecretLength;
+    const secret = generateSecret(length, base);
 
-    const initialState = createInitialState({ base, length });
+    // eslint-disable-next-line no-console
+    console.log('Generated Secret:', secret);
+
+    const initialState = createInitialState({ base, length, secret });
 
     renderGameScreen(appContainer, initialState);
   });
