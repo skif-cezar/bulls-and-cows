@@ -1,4 +1,4 @@
-import { Base, HistoryEntry, SecretLength } from './game.types';
+import { Base, HistoryEntry, RecordItem, SecretLength } from './game.types';
 
 export interface ButtonConfig {
   text: string;
@@ -76,4 +76,5 @@ export interface WinBannerComponent {
 export interface GameBodyComponent {
   element: HTMLElement;
   updateHistory: (history: HistoryEntry[]) => void;
+  updateRecords: (records: RecordItem[]) => void;
 }

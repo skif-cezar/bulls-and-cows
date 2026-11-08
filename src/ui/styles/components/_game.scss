@@ -202,24 +202,11 @@
   }
 }
 
-.history,
-.records {
-  &-list,
+.history {
   &-list {
     list-style: none;
     counter-reset: my-counter;
     padding-left: 0;
-
-    & li {
-      counter-increment: my-counter;
-      position: relative;
-      margin-bottom: 8px;
-
-      &::before {
-        content: '#' counter(my-counter) ' ';
-        margin-right: 6px;
-      }
-    }
   }
 
   &-item {
@@ -232,6 +219,63 @@
     font-size: 0.75rem;
     font-weight: var(--font-weight-regular);
     color: var(--text-primary);
+    counter-increment: my-counter;
+    position: relative;
+    margin-bottom: 8px;
+
+    &::before {
+      content: '#' counter(my-counter) ' ';
+      margin-right: 6px;
+    }
+  }
+}
+
+.records {
+  &-list {
+    list-style: none;
+    counter-reset: my-counter;
+    padding-left: 0;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    background-color: var(--bg-controls);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-regular);
+    color: var(--text-primary);
+    counter-increment: my-counter;
+    position: relative;
+    margin-bottom: 8px;
+
+    &::before {
+      content: '#' counter(my-counter) ' ';
+      margin-right: 6px;
+    }
+  }
+
+  &-attempts {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-regular);
+  }
+
+  &-attempts-count {
+    margin-left: 4px;
+    color: var(--text-accent);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &-time {
+    color: var(--text-accent);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &-badge {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-regular);
   }
 }
 
@@ -247,20 +291,19 @@
 }
 
 .item-bulls::before {
-background-image: url('/public/assets/images/bull-count-icon.png');
+  background-image: url('/public/assets/images/bull-count-icon.png');
 }
 
 .item-cows::before {
-background-image: url('/public/assets/images/cow-count-icon.png');
+  background-image: url('/public/assets/images/cow-count-icon.png');
 }
 
-.item-bulls, .item-cows {
-     display: flex;
-    align-items: center;
-    gap: 6px;
+.item-bulls,
+.item-cows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-
-
 
 .item-bulls {
   color: var(--text-succes);

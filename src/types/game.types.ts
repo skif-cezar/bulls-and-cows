@@ -38,3 +38,12 @@ export type GameState = {
   settings: GameSettings;
   status: GameStatus;
 };
+
+export interface RecordItem {
+  id: string;
+  attempts: number;
+  time: number;
+  base: Base;
+  length: SecretLength;
+  date: string;
+}

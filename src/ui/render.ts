@@ -3,6 +3,7 @@ import { generateSecret } from '../core/generateSecret';
 import { addAttemptToState, createInitialState, setGameStatus } from '../state/state';
 import { Base, SecretLength, GameState, HistoryEntry } from '../types/game.types';
 import { clearGameTimer, startGameTimer } from '../utils/gameTimer';
+import { addRecord, getRecords } from '../utils/records';
 import { createButton } from './components/button/button';
 import { createGameBoard } from './components/game/gameBoard';
 import { createBodyModal } from './components/modal/bodyModal';
@@ -94,6 +95,14 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
 
         winBannerComponent.showWin(state.settings.secret, state.history.length, elapsedTime);
 
+        const updatedRecords = addRecord({
+          attempts: state.history.length,
+          time: elapsedTime,
+          base: state.settings.base,
+          length: state.settings.length,
+        });
+        gameBodyComponent.updateRecords(updatedRecords);
+
         const guessInput = gameForm.querySelector('#guess-input') as HTMLInputElement;
         const submitBtn = gameForm.querySelector('button');
         if (guessInput) guessInput.disabled = true;
@@ -103,6 +112,8 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
       return { success: true };
     },
   });
+
+  gameBodyComponent.updateRecords(getRecords());
 
   appContainer.replaceChildren(modal);
 

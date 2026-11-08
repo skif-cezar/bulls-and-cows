@@ -1,4 +1,4 @@
-import { HistoryEntry } from '../../../types/game.types';
+import { HistoryEntry, RecordItem } from '../../../types/game.types';
 import { GameBodyComponent } from '../../../types/ui.types';
 
 export const createGameBody = (): GameBodyComponent => {
@@ -59,8 +59,47 @@ export const createGameBody = (): GameBodyComponent => {
     });
   };
 
+  // A method for updating records list
+  const updateRecords = (records: RecordItem[]): void => {
+    recordsList.replaceChildren();
+
+    if (records.length === 0) {
+      const emptyItem = document.createElement('li');
+      emptyItem.classList.add('records-empty');
+      emptyItem.textContent = 'No records yet';
+      recordsList.append(emptyItem);
+      return;
+    }
+
+    records.forEach((rec) => {
+      const recordsItem = document.createElement('li');
+      recordsItem.classList.add('records-item');
+
+      const attempts = document.createElement('span');
+      attempts.classList.add('records-attempts');
+      attempts.textContent = 'Att: ';
+
+      const attemptsCount = document.createElement('strong');
+      attemptsCount.classList.add('records-attempts-count');
+      attemptsCount.textContent = `${rec.attempts}`;
+
+      const time = document.createElement('span');
+      time.classList.add('records-time');
+      time.textContent = `${rec.time} sec`;
+
+      const badge = document.createElement('span');
+      badge.classList.add('records-badge');
+      badge.textContent = `${rec.base.toUpperCase()} (${rec.length})`;
+
+      attempts.append(attemptsCount);
+      recordsItem.append(attempts, time, badge);
+      recordsList.append(recordsItem);
+    });
+  };
+
   return {
     element: gameBody,
     updateHistory,
+    updateRecords,
   };
 };
