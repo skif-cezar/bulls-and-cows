@@ -1,5 +1,6 @@
-import { SecretLength, Base, BASE_ALPHABETS } from '../types/game.types';
+import { SecretLength, Base } from '../types/game.types';
 import { getPermutations } from '../utils/combinatorics';
+import { BASE_ALPHABETS } from './constants';
 
 /**
  * Calculates how many distinct secret numbers exist for a given length and base

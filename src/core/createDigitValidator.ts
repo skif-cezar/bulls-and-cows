@@ -1,4 +1,5 @@
-import { Base, BASE_ALPHABETS } from '../types/game.types';
+import { Base } from '../types/game.types';
+import { BASE_ALPHABETS } from './constants';
 
 /**
  * Given a numeral system, it returns a predicate function: "this character is a valid digit

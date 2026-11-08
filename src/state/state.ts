@@ -2,7 +2,8 @@ import { evaluateGuess } from '../core/evaluateGuess';
 import { GameSettings, GameState, HistoryEntry, GameStatus, GuessProcessResult } from '../types/game.types';
 
 /** Start Game initialization */
-export const createInitialState = (settings: GameSettings): GameState => ({
+export const createInitialState = (secret: string, settings: GameSettings): GameState => ({
+  secret,
   history: [],
   settings,
   status: 'playing',
@@ -49,7 +50,7 @@ export const processGuess = (state: GameState, guessValue: string): GuessProcess
   }
 
   // Comparison with a secret number
-  const { bulls, cows } = evaluateGuess(state.settings.secret, guessValue);
+  const { bulls, cows } = evaluateGuess(state.secret, guessValue);
 
   const historyEntry: HistoryEntry = {
     guess: guessValue,

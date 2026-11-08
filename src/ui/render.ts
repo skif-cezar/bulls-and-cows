@@ -42,7 +42,7 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
     // eslint-disable-next-line no-console
     console.log('Generated Secret:', secret);
 
-    const initialState = createInitialState({ base, length, secret });
+    const initialState = createInitialState(secret, { base, length });
 
     renderGameScreen(appContainer, initialState);
   });
@@ -78,7 +78,7 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
       if (result.isWin) {
         clearGameTimer();
 
-        winBannerComponent.showWin(state.settings.secret, state.history.length, elapsedTime);
+        winBannerComponent.showWin(state.secret, state.history.length, elapsedTime);
 
         const updatedRecords = addRecord({
           attempts: state.history.length,

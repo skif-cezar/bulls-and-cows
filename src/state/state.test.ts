@@ -3,9 +3,11 @@ import { addAttemptToState } from './state';
 
 describe('State Management: addAttemptToState()', () => {
   const initialState: GameState = {
+    secret: '1234',
     history: [],
     settings: { length: 4, base: 'dec' },
     status: 'playing',
+    elapsedSeconds: 0,
   };
 
   it('должен добавлять новую попытку в историю, создавая новый массив и новый объект состояния', () => {
@@ -36,11 +38,12 @@ describe('State Management: addAttemptToState()', () => {
     expect(nextState.history[0]).toBe(stateWithOneAttempt.history[0]);
   });
 
-  it('должен сохранять остальные поля состояния (settings, status) без изменений', () => {
+  it('должен сохранять остальные поля состояния (secret, settings, status) без изменений', () => {
     const entry: HistoryEntry = { guess: '4321', bulls: 4, cows: 0 };
 
     const nextState = addAttemptToState(initialState, entry);
 
+    expect(nextState.secret).toBe(initialState.secret);
     expect(nextState.settings).toEqual(initialState.settings);
     expect(nextState.status).toBe(initialState.status);
   });
