@@ -35,33 +35,17 @@ export const createModal = ({
   modalDialog.append(title);
 
   if (bodyContent) {
-    if (Array.isArray(bodyContent)) {
-      modalDialog.append(...bodyContent);
-    } else {
-      modalDialog.append(bodyContent);
-    }
+    modalDialog.append(bodyContent);
   }
 
   if (actionsContent && actionsContent.length > 0) {
     const actions = document.createElement('div');
     actions.classList.add('modal-actions');
-
-    if (Array.isArray(actionsContent)) {
-      actions.append(...actionsContent);
-    } else {
-      actions.append(actionsContent);
-    }
-
+    actions.append(...actionsContent);
     modalDialog.append(actions);
   }
 
   modal.append(modalDialog);
-
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      /*closeModal(modal);*/
-    }
-  });
 
   return modal;
 };

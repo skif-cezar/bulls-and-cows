@@ -10,7 +10,7 @@ export const createGameBody = (): GameBodyComponent => {
 
   const sectionHistoryTitle = document.createElement('h3');
   sectionHistoryTitle.classList.add('game-section-title', 'history-title');
-  sectionHistoryTitle.textContent = `A History of Attempts (${2})`;
+  sectionHistoryTitle.textContent = 'A History of Attempts (0)';
 
   const historyList = document.createElement('ol');
   historyList.classList.add('history-list');
