@@ -77,8 +77,6 @@ export const createGameForm = ({ length, base, onGuessSubmit }: GameFormProps) =
     const validation = isValidGuess(value, length, base);
 
     if (!validation.isValid) {
-      console.warn('Validation failed:', validation.error);
-
       errorContainer.textContent = validation.error || 'Invalid input';
       input.classList.add('error');
 
