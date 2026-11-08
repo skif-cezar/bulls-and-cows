@@ -66,6 +66,15 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
     onGuessSubmit: (guessValue) => {
       if (state.status !== 'playing') return;
 
+      const isAlreadyGuessed = state.history.some((entry) => entry.guess.toLowerCase() === guessValue.toLowerCase());
+
+      if (isAlreadyGuessed) {
+        return {
+          success: false,
+          error: `You have already tried "${guessValue}". Try another number!`,
+        };
+      }
+
       const { bulls, cows } = evaluateGuess(state.settings.secret, guessValue);
 
       const historyEntry: HistoryEntry = {
@@ -90,6 +99,8 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
         if (guessInput) guessInput.disabled = true;
         if (submitBtn) submitBtn.setAttribute('disabled', 'true');
       }
+
+      return { success: true };
     },
   });
 
@@ -98,6 +109,7 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
   startGameTimer((currentTime) => {
     elapsedTime = currentTime;
     const timeValueElement = document.getElementById('game-time-value');
+
     if (timeValueElement) {
       timeValueElement.textContent = `${currentTime} sec`;
     }

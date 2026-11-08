@@ -87,7 +87,14 @@ export const createGameForm = ({ length, base, onGuessSubmit }: GameFormProps) =
 
     errorContainer.textContent = '';
 
-    onGuessSubmit(value);
+    const result = onGuessSubmit(value);
+
+    if (result && !result.success) {
+      errorContainer.textContent = result.error || 'This guess has already been made';
+      input.classList.add('error');
+
+      return;
+    }
 
     input.value = '';
   });

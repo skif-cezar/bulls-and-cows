@@ -65,7 +65,7 @@ export interface GameBoardConfig {
 export interface GameFormProps {
   length: SecretLength;
   base: Base;
-  onGuessSubmit: (guess: string) => void;
+  onGuessSubmit: (guess: string) => { success: boolean; error?: string } | void;
 }
 
 export interface WinBannerComponent {
