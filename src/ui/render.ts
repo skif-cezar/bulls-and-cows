@@ -1,7 +1,6 @@
-import { evaluateGuess } from '../core/evaluateGuess';
 import { generateSecret } from '../core/generateSecret';
-import { addAttemptToState, createInitialState, setGameStatus } from '../state/state';
-import { Base, SecretLength, GameState, HistoryEntry } from '../types/game.types';
+import { createInitialState, processGuess } from '../state/state';
+import { Base, SecretLength, GameState } from '../types/game.types';
 import { clearGameTimer, startGameTimer } from '../utils/gameTimer';
 import { addRecord, getRecords } from '../utils/records';
 import { createButton } from './components/button/button';
@@ -38,7 +37,6 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
   btnStartGame.addEventListener('click', () => {
     const base = bodyModalData.notationSelect.getValue() as Base;
     const length = Number(bodyModalData.lengthSelect.getValue()) as SecretLength;
-    // Randomness is an impure input, so it is created here at the edge and handed to the pure core
     const secret = generateSecret(length, base, Math.random);
 
     // eslint-disable-next-line no-console
@@ -56,7 +54,7 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
  * Render the game board (game screen)
  */
 export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState): void => {
-  let elapsedTime = 0;
+  let elapsedTime = state.elapsedSeconds;
 
   const { modal, winBannerComponent, gameForm, gameBodyComponent } = createGameBoard({
     base: state.settings.base,
@@ -66,32 +64,18 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
       renderStartScreen(appContainer);
     },
     onGuessSubmit: (guessValue) => {
-      if (state.status !== 'playing') return;
+      const result = processGuess(state, guessValue);
 
-      const isAlreadyGuessed = state.history.some((entry) => entry.guess.toLowerCase() === guessValue.toLowerCase());
-
-      if (isAlreadyGuessed) {
-        return {
-          success: false,
-          error: `You have already tried "${guessValue}". Try another number!`,
-        };
+      if (!result.success) {
+        return { success: false, error: result.error };
       }
 
-      const { bulls, cows } = evaluateGuess(state.settings.secret, guessValue);
-
-      const historyEntry: HistoryEntry = {
-        guess: guessValue,
-        bulls,
-        cows,
-      };
-
-      state = addAttemptToState(state, historyEntry);
+      state = result.newState;
 
       gameBodyComponent.updateHistory(state.history);
 
       // Win logic
-      if (bulls === state.settings.length) {
-        state = setGameStatus(state, 'won');
+      if (result.isWin) {
         clearGameTimer();
 
         winBannerComponent.showWin(state.settings.secret, state.history.length, elapsedTime);
@@ -115,11 +99,11 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
   });
 
   gameBodyComponent.updateRecords(getRecords());
-
   appContainer.replaceChildren(modal);
 
   startGameTimer((currentTime) => {
     elapsedTime = currentTime;
+    state.elapsedSeconds = currentTime;
     const timeValueElement = document.getElementById('game-time-value');
 
     if (timeValueElement) {

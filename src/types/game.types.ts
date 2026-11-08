@@ -37,6 +37,7 @@ export type GameState = {
   history: HistoryEntry[];
   settings: GameSettings;
   status: GameStatus;
+  elapsedSeconds: number;
 };
 
 export interface RecordItem {
@@ -46,4 +47,11 @@ export interface RecordItem {
   base: Base;
   length: SecretLength;
   date: string;
+}
+
+export interface GuessProcessResult {
+  success: boolean;
+  error?: string;
+  newState: GameState;
+  isWin?: boolean;
 }
