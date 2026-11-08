@@ -38,7 +38,8 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
   btnStartGame.addEventListener('click', () => {
     const base = bodyModalData.notationSelect.getValue() as Base;
     const length = Number(bodyModalData.lengthSelect.getValue()) as SecretLength;
-    const secret = generateSecret(length, base);
+    // Randomness is an impure input, so it is created here at the edge and handed to the pure core
+    const secret = generateSecret(length, base, Math.random);
 
     // eslint-disable-next-line no-console
     console.log('Generated Secret:', secret);
