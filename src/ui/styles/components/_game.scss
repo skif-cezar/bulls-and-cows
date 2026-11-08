@@ -1,0 +1,403 @@
+@use '../abstracts' as *;
+
+%flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+%list-reset {
+  max-height: 192px;
+  overflow-y: auto;
+  padding-right: 4px;
+  list-style: none;
+  counter-reset: my-counter;
+  padding-left: 0;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-controls);
+    border-radius: 4px;
+  }
+}
+
+%list-item-base {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  background-color: var(--bg-controls);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
+  counter-increment: my-counter;
+
+  &::before {
+    content: '#' counter(my-counter) ' ';
+    margin-right: 6px;
+  }
+}
+
+// ==========================================
+// Game Component
+// ==========================================
+.game {
+  &-board {
+    @extend %flex-column;
+    box-sizing: border-box;
+    margin: auto;
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    padding: 24px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 16px;
+    transition: height 0.4s ease;
+
+    &.is-won {
+      grid-template-rows: auto 1fr auto;
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-primary);
+
+    > .button {
+      max-width: 144px;
+    }
+  }
+
+  &-meta {
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-regular);
+    line-height: var(--font-size-base);
+    color: var(--text-primary);
+  }
+
+  &-mode {
+    padding-right: 8px;
+    border-right: 2px solid var(--text-primary);
+
+    .mode-value {
+      color: var(--text-secondary);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  &-time {
+    padding-left: 8px;
+
+    .time-value {
+      color: var(--text-accent);
+      font-weight: var(--font-weight-bold);
+    }
+  }
+
+  &-banner {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 24px 0;
+    padding: 20px;
+    background-color: var(--bg-accent);
+    border: 1px solid var(--border-accent);
+    border-radius: 16px;
+
+    &.win-banner {
+      display: flex;
+      animation: fadeInBanner 0.4s ease forwards;
+    }
+  }
+
+  &-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 6px;
+  }
+
+  &-section {
+    @extend %flex-column;
+    padding: 12px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-secondary);
+    border-radius: 12px;
+
+    &-title {
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+    }
+  }
+}
+
+// ==========================================
+// Guess Component & Form
+// ==========================================
+.guess {
+  &-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+
+    > .button {
+      max-width: 100px;
+      align-self: flex-start;
+    }
+  }
+
+  &-input {
+    flex: 1;
+    padding: 10px 12px;
+    background-color: var(--border-primary);
+    border: 1px solid var(--border-controls);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    outline: none;
+
+    &:focus {
+      border-color: var(--focus-color);
+    }
+  }
+
+  &-number {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &-result {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.input-container {
+  @extend %flex-column;
+  gap: 6px;
+  width: 100%;
+}
+
+.guess-error-message {
+  color: var(--text-error);
+  font-size: 0.75rem;
+  min-height: 18px;
+}
+
+// ==========================================
+// Banner Elements
+// ==========================================
+.banner {
+  &-title {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    color: var(--text-accent);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &-text {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 2;
+  }
+
+  &-code,
+  &-result {
+    padding: 2px 8px;
+    background-color: var(--bg-controls);
+    border-radius: 4px;
+    color: var(--text-accent);
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+// ==========================================
+// Lists (History & Records)
+// ==========================================
+.history {
+  &-list {
+    @extend %list-reset;
+  }
+
+  &-item {
+    @extend %list-item-base;
+  }
+}
+
+.records {
+  &-title {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding-left: 24px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url('/public/assets/images/rank-icon.png') center / cover no-repeat;
+    }
+  }
+
+  &-list {
+    @extend %list-reset;
+  }
+
+  &-item {
+    @extend %list-item-base;
+  }
+
+  &-attempts {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-regular);
+  }
+
+  &-attempts-count {
+    margin-left: 4px;
+    color: var(--text-accent);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &-time {
+    color: var(--text-accent);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &-badge {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-regular);
+  }
+}
+
+// ==========================================
+// Bulls & Cows Items
+// ==========================================
+.item-bulls,
+.item-cows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.item-bulls {
+  color: var(--text-success);
+  &::before {
+    background-image: url('/public/assets/images/bull-count-icon.png');
+  }
+}
+
+.item-cows {
+  color: var(--text-warn);
+
+  &::before {
+    background-image: url('/public/assets/images/cow-count-icon.png');
+  }
+}
+
+// ==========================================
+// Animations
+// ==========================================
+@keyframes fadeInBanner {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ==========================================
+// Media queries
+// ==========================================
+@media (max-width: 576px) {
+  .game {
+    &-banner {
+      margin: 16px 0;
+      padding: 16px;
+    }
+
+    &-board {
+      padding: 16px;
+    }
+
+    &-body {
+      grid-template-columns: 1fr;
+    }
+
+    &-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    &-mode,
+    &-time {
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .guess {
+    &-form {
+      margin: 16px 0;
+      flex-direction: column;
+
+      & > .button {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 390px) {
+  .game {
+    &-header {
+      flex-direction: column;
+      gap: 8px;
+
+      & > .button {
+        max-width: 100%;
+      }
+    }
+
+    &-meta {
+      margin-left: auto;
+      order: -1;
+    }
+  }
+}

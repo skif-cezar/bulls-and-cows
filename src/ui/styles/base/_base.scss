@@ -1,0 +1,40 @@
+@use '../abstracts' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  font-size: var(--font-size-base);
+}
+
+body {
+  position: relative;
+  min-height: 100dvh;
+  color: var(--text-secondary);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  overflow-x: hidden;
+  background: var(--bg-main);
+}
+
+button {
+  background: none;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  border: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
