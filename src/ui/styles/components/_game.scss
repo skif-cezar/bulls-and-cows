@@ -6,9 +6,20 @@
 }
 
 %list-reset {
+  max-height: 192px;
+  overflow-y: auto;
+  padding-right: 4px;
   list-style: none;
   counter-reset: my-counter;
   padding-left: 0;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-controls);
+    border-radius: 4px;
+  }
 }
 
 %list-item-base {
@@ -37,6 +48,8 @@
 .game {
   &-board {
     @extend %flex-column;
+    box-sizing: border-box;
+    margin: auto;
     width: 100%;
     max-width: 680px;
     height: auto;
@@ -115,7 +128,6 @@
 
   &-section {
     @extend %flex-column;
-    height: 192px;
     padding: 12px;
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-secondary);
@@ -204,6 +216,7 @@
   &-text {
     color: var(--text-secondary);
     font-size: 0.875rem;
+    line-height: 2;
   }
 
   &-code,
@@ -324,5 +337,67 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+// ==========================================
+// Media queries
+// ==========================================
+@media (max-width: 576px) {
+  .game {
+    &-banner {
+      margin: 16px 0;
+      padding: 16px;
+    }
+
+    &-board {
+      padding: 16px;
+    }
+
+    &-body {
+      grid-template-columns: 1fr;
+    }
+
+    &-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    &-mode,
+    &-time {
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .guess {
+    &-form {
+      margin: 16px 0;
+      flex-direction: column;
+
+      & > .button {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 390px) {
+  .game {
+    &-header {
+      flex-direction: column;
+      gap: 8px;
+
+      & > .button {
+        max-width: 100%;
+      }
+    }
+
+    &-meta {
+      margin-left: auto;
+      order: -1;
+    }
   }
 }

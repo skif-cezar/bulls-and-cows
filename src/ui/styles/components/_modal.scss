@@ -11,6 +11,9 @@
   inset: 0;
   z-index: 50;
   padding: 16px;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
 
   &-dialog {
     display: flex;

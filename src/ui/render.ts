@@ -37,9 +37,6 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
     const length = Number(bodyModalData.lengthSelect.getValue()) as SecretLength;
     const secret = generateSecret(length, base, Math.random);
 
-    // eslint-disable-next-line no-console
-    console.log('Generated Secret:', secret);
-
     const initialState = createInitialState(secret, { base, length });
 
     renderGameScreen(appContainer, initialState);

@@ -97,6 +97,7 @@ export const createGameForm = ({ length, base, onGuessSubmit }: GameFormProps) =
     }
 
     input.value = '';
+    input.focus();
   });
 
   form.append(inputContainer, btnEnter);
