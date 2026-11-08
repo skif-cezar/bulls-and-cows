@@ -1,7 +1,7 @@
 import { generateSecret } from '../core/generateSecret';
-import { createInitialState, processGuess } from '../state/state';
+import { createInitialState, processGuess, tick } from '../state/state';
 import { Base, SecretLength, GameState } from '../types/game.types';
-import { clearGameTimer, startGameTimer } from '../utils/gameTimer';
+import { startGameTimer } from '../utils/gameTimer';
 import { addRecord, getRecords } from '../utils/records';
 import { createButton } from './components/button/button';
 import { createGameBoard } from './components/game/gameBoard';
@@ -12,8 +12,6 @@ import { createModal } from './components/modal/modal';
  * Render of the start screen with settings
  */
 export const renderStartScreen = (appContainer: HTMLDivElement): void => {
-  clearGameTimer();
-
   const bodyModalData = createBodyModal();
 
   const btnStartGame = createButton({
@@ -54,13 +52,12 @@ export const renderStartScreen = (appContainer: HTMLDivElement): void => {
  * Render the game board (game screen)
  */
 export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState): void => {
-  let elapsedTime = state.elapsedSeconds;
-
   const { modal, winBannerComponent, gameForm, gameBodyComponent } = createGameBoard({
     base: state.settings.base,
     length: state.settings.length,
-    timeInSeconds: elapsedTime,
+    timeInSeconds: state.elapsedSeconds,
     onRestart: () => {
+      stopTimer();
       renderStartScreen(appContainer);
     },
     onGuessSubmit: (guessValue) => {
@@ -76,13 +73,11 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
 
       // Win logic
       if (result.isWin) {
-        clearGameTimer();
-
-        winBannerComponent.showWin(state.secret, state.history.length, elapsedTime);
+        winBannerComponent.showWin(state.secret, state.history.length, state.elapsedSeconds);
 
         const updatedRecords = addRecord({
           attempts: state.history.length,
-          time: elapsedTime,
+          time: state.elapsedSeconds,
           base: state.settings.base,
           length: state.settings.length,
         });
@@ -101,13 +96,15 @@ export const renderGameScreen = (appContainer: HTMLDivElement, state: GameState)
   gameBodyComponent.updateRecords(getRecords());
   appContainer.replaceChildren(modal);
 
-  startGameTimer((currentTime) => {
-    elapsedTime = currentTime;
-    state.elapsedSeconds = currentTime;
+  const updateTimerView = (seconds: number) => {
     const timeValueElement = document.getElementById('game-time-value');
-
     if (timeValueElement) {
-      timeValueElement.textContent = `${currentTime} sec`;
+      timeValueElement.textContent = `${seconds} sec`;
     }
+  };
+
+  const stopTimer = startGameTimer(() => {
+    state = tick(state);
+    updateTimerView(state.elapsedSeconds);
   });
 };

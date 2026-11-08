@@ -10,6 +10,10 @@ export const createInitialState = (secret: string, settings: GameSettings): Game
   elapsedSeconds: 0,
 });
 
+/** One second of game time has passed. Time is state, so the timer only has to dispatch ticks */
+export const tick = (state: GameState): GameState =>
+  state.status === 'playing' ? { ...state, elapsedSeconds: state.elapsedSeconds + 1 } : state;
+
 /**
  * Add a new attempt to the game history
  */
